@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#root {
+  @apply my-0 mx-auto max-w-7xl p-8 relative;
+}
+body {
+  @apply w-[100vw] min-h-[100vh] bg-slate900;
+}
+
+@layer components{
+  .icon{
+    @apply w-6 h-6
+  }
+}
