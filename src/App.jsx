@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import { allCharacters } from "../data/data";
 import "./App.css";
 import CharacterDetail from "./components/CharacterDetail";
@@ -5,12 +6,21 @@ import CharachterList from "./components/CharacterList";
 import Navbar from "./components/Navbar";
 
 function App() {
+  // const [allCharacters, setallCharacters] = useState([]);
+
+  useEffect(()=>{
+    try {
+      
+    } catch (error) {
+      
+    }
+  },[])
   return (
-    <div>
+    <div className="">
       <Navbar />
-      <div className=" flex items-center justify-between w-full">
+      <div className=" flex flex-col md:flex-row justify-between w-full gap-10">
         <CharachterList allCharacters={allCharacters} />
-        <CharacterDetail/>
+        <CharacterDetail />
       </div>
     </div>
   );
