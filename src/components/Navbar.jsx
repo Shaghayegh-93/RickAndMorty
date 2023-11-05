@@ -6,7 +6,7 @@ const Navbar = () => {
     <nav className="flex items-center justify-between  bg-slate700 p-4 rounded-2xl mb-4 text-white">
       <h1 className="text-slate300 font-bold">Logo</h1>
       <input
-        className="py-3 px-4 rounded-lg text-slate100 bg-slate500 text-base"
+        className="py-3 px-4 rounded-lg text-slate100 bg-slate500 text-base hidden md:inline-block"
         type="text"
         placeholder="Serach..."
       />
