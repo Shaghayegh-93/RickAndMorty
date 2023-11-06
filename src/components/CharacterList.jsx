@@ -1,21 +1,30 @@
 import { EyeIcon } from "@heroicons/react/24/outline";
 import React from "react";
+import Loader from "./Loader";
 
-const CharacterList = ({ allCharacters }) => {
+const CharacterList = ({ allCharacters, isLoading, selectedIdHandler }) => {
   return (
-    <div className="">
-      {allCharacters.map((character) => (
-        <Character key={character.id} character={character} />
-      ))}
+    <div className="w-full md:w-[30%]">
+      {isLoading ? (
+        <Loader />
+      ) : (
+        allCharacters.map((character) => (
+          <Character
+            key={character.id}
+            character={character}
+            selectedIdHandler={selectedIdHandler}
+          />
+        ))
+      )}
     </div>
   );
 };
 
 export default CharacterList;
 
-function Character({ character }) {
+function Character({ character, selectedIdHandler }) {
   return (
-    <div className="grid grid-cols-[4rem,1fr,2rem,2rem] md:grid-cols-[4rem,1fr,2rem,2rem] grid-rows-2 gap-x-4 bg-slate800 rounded-lg p-3 cursor-pointer transition-all duration-[0.2s] ease-out hover:bg-slate700 mb-6 last:mb-0">
+    <div className="grid grid-cols-[4rem,1fr,2rem,2rem] md:grid-cols-[4rem,1fr,2rem] grid-rows-2 gap-x-4 bg-slate800 rounded-lg p-3 cursor-pointer transition-all duration-[0.2s] ease-out hover:bg-slate700 mb-6 last:mb-0">
       <img
         src={character.image}
         alt=""
@@ -35,7 +44,10 @@ function Character({ character }) {
         <span>{character.status}</span> - &nbsp;
         <span>{character.species}</span>
       </div>
-      <button className=" ml-3 md:ml-0 col-start-4 col-end-4 md:col-start-5 md:col-end-5 row-start-1 row-end-3 self-center  col-span-2  text-rose500  ">
+      <button
+        className=" ml-3 md:ml-0 col-start-4 col-end-4 md:col-start-5 md:col-end-5 row-start-1 row-end-3 self-center  col-span-2  text-rose500  "
+        onClick={() => selectedIdHandler(character.id)}
+      >
         <EyeIcon className="w-6 h-6  " />
       </button>
     </div>
