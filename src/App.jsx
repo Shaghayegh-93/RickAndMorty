@@ -12,6 +12,7 @@ function App() {
   const [error, setError] = useState("");
   const [allCharacters, setallCharacters] = useState([]);
   const [serach, setSearch] = useState("");
+  const [selctedId, setSelectedId] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -20,19 +21,23 @@ function App() {
         const { data } = await axios.get(
           `https://rickandmortyapi.com/api/character/?name=${serach}`
         );
+        console.log(data);
         setallCharacters(data.results.slice(0, 5));
       } catch (error) {
-        toast.error(error.response.data.error);
+        toast.error(error.message);
+        console.log(error);
       } finally {
         setIsLoading(false);
       }
     };
-    if (serach.length < 3) {
-      setallCharacters([]);
-      return;
-    }
+
     fetchData();
   }, [serach]);
+
+  const selectedIdHandler = (id) => {
+    setSelectedId(Number(id));
+  };
+
   return (
     <div className="">
       <Toaster />
@@ -42,8 +47,12 @@ function App() {
         setSearch={setSearch}
       />
       <div className=" flex flex-col md:flex-row justify-between w-full gap-10">
-        <CharachterList allCharacters={allCharacters} isLoading={isLoading} />
-        <CharacterDetail />
+        <CharachterList
+          allCharacters={allCharacters}
+          isLoading={isLoading}
+          selectedIdHandler={selectedIdHandler}
+        />
+        <CharacterDetail selctedId={selctedId} />
       </div>
     </div>
   );
