@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {  episodes } from "../../data/data";
+// import { episodes } from "../../data/data";
 import { ArrowDownCircleIcon } from "@heroicons/react/24/outline";
 import toast from "react-hot-toast";
 import axios from "axios";
@@ -7,6 +7,7 @@ import axios from "axios";
 const CharacterDetail = ({ selctedId }) => {
   const [character, setCharacter] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [episodes, setEpisodes] = useState([]);
 
   useEffect(() => {
     const fetchselectedCharacter = async () => {
@@ -15,6 +16,14 @@ const CharacterDetail = ({ selctedId }) => {
         const { data } = await axios.get(
           `https://rickandmortyapi.com/api/character/${selctedId}`
         );
+        const episodeId = data.episode.map((e) => e.split("/").at(-1));
+        console.log("episodeId", episodeId);
+        const { data: episodeData } = await axios.get(
+          `https://rickandmortyapi.com/api/episode/${episodeId}`
+        );
+        setEpisodes([episodeData].flat().slice(0, 6));
+        // console.log("episodes", episodes);
+        console.log("episodeData:", episodeData);
         setCharacter(data);
       } catch (error) {
         toast.error(error.message);
@@ -22,13 +31,14 @@ const CharacterDetail = ({ selctedId }) => {
         setIsLoading(false);
       }
     };
-    fetchselectedCharacter();
+   if(selctedId) fetchselectedCharacter();
   }, [selctedId]);
 
   if (!character || !selctedId)
     return (
       <div className="flex-1 text-slate300">Please select a character.</div>
     );
+    
   return (
     <div className="flex-1 rounded-lg ">
       <div className="grid grid-cols-3  bg-slate800 rounded-lg cursor-pointer transition-all duration-[0.2s] ease-out hover:bg-slate700 mb-6 last:mb-0">
@@ -65,14 +75,14 @@ const CharacterDetail = ({ selctedId }) => {
           </div>
         </div>
       </div>
-      <EpisodeList />
+      <EpisodeList episodes={episodes} />
     </div>
   );
 };
 
 export default CharacterDetail;
 
-function EpisodeList() {
+function EpisodeList({episodes}) {
   return (
     <div className="text-white p-4 bg-slate800 rounded-lg cursor-pointer transition-all duration-[0.2s] ease-out hover:bg-slate700">
       <div className="flex justify-between mb-6">
