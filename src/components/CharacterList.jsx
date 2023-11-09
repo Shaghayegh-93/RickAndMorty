@@ -1,8 +1,13 @@
-import { EyeIcon } from "@heroicons/react/24/outline";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import React from "react";
 import Loader from "./Loader";
 
-const CharacterList = ({ allCharacters, isLoading, selectedIdHandler }) => {
+const CharacterList = ({
+  allCharacters,
+  isLoading,
+  selectedIdHandler,
+  selctedId,
+}) => {
   return (
     <div className="w-full md:w-[30%]">
       {isLoading ? (
@@ -13,6 +18,7 @@ const CharacterList = ({ allCharacters, isLoading, selectedIdHandler }) => {
             key={character.id}
             character={character}
             selectedIdHandler={selectedIdHandler}
+            selctedId={selctedId}
           />
         ))
       )}
@@ -22,7 +28,7 @@ const CharacterList = ({ allCharacters, isLoading, selectedIdHandler }) => {
 
 export default CharacterList;
 
-function Character({ character, selectedIdHandler }) {
+function Character({ character, selectedIdHandler, selctedId }) {
   return (
     <div className="grid grid-cols-[4rem,1fr,2rem,2rem] md:grid-cols-[4rem,1fr,2rem] grid-rows-2 gap-x-4 bg-slate800 rounded-lg p-3 cursor-pointer transition-all duration-[0.2s] ease-out hover:bg-slate700 mb-6 last:mb-0">
       <img
@@ -48,7 +54,11 @@ function Character({ character, selectedIdHandler }) {
         className=" ml-3 md:ml-0 col-start-4 col-end-4 md:col-start-5 md:col-end-5 row-start-1 row-end-3 self-center  col-span-2  text-rose500  "
         onClick={() => selectedIdHandler(character.id)}
       >
-        <EyeIcon className="w-6 h-6  " />
+        {selctedId === character.id ? (
+          <EyeSlashIcon className="w-6 h-6  " />
+        ) : (
+          <EyeIcon className="w-6 h-6  " />
+        )}
       </button>
     </div>
   );
