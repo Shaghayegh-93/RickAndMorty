@@ -4,7 +4,7 @@ import { ArrowDownCircleIcon } from "@heroicons/react/24/outline";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-const CharacterDetail = ({ selctedId }) => {
+const CharacterDetail = ({ selctedId, addFavoriteHandler }) => {
   const [character, setCharacter] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [episodes, setEpisodes] = useState([]);
@@ -31,14 +31,15 @@ const CharacterDetail = ({ selctedId }) => {
         setIsLoading(false);
       }
     };
-   if(selctedId) fetchselectedCharacter();
+
+    if (selctedId) fetchselectedCharacter();
   }, [selctedId]);
 
   if (!character || !selctedId)
     return (
       <div className="flex-1 text-slate300">Please select a character.</div>
     );
-    
+
   return (
     <div className="flex-1 rounded-lg ">
       <div className="grid grid-cols-3  bg-slate800 rounded-lg cursor-pointer transition-all duration-[0.2s] ease-out hover:bg-slate700 mb-6 last:mb-0">
@@ -69,7 +70,10 @@ const CharacterDetail = ({ selctedId }) => {
             </p>
           </div>
           <div className="mb-4 md:mb-0">
-            <button className="py-1 px-2 md:py-3 md:px-4   rounded-2xl bg-slate500 text-slate-100 md:font-bold">
+            <button
+              onClick={() => addFavoriteHandler(character.id)}
+              className="py-1 px-2 md:py-3 md:px-4   rounded-2xl bg-slate500 text-slate-100 md:font-bold"
+            >
               Add to Favorite
             </button>
           </div>
@@ -82,7 +86,7 @@ const CharacterDetail = ({ selctedId }) => {
 
 export default CharacterDetail;
 
-function EpisodeList({episodes}) {
+function EpisodeList({ episodes }) {
   return (
     <div className="text-white p-4 bg-slate800 rounded-lg cursor-pointer transition-all duration-[0.2s] ease-out hover:bg-slate700">
       <div className="flex justify-between mb-6">
