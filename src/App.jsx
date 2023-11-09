@@ -58,6 +58,7 @@ function App() {
         <CharachterList
           allCharacters={allCharacters}
           isLoading={isLoading}
+          selctedId={selctedId}
           selectedIdHandler={selectedIdHandler}
         />
         <CharacterDetail
