@@ -13,6 +13,7 @@ function App() {
   const [allCharacters, setallCharacters] = useState([]);
   const [serach, setSearch] = useState("");
   const [selctedId, setSelectedId] = useState(null);
+  const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,7 +38,13 @@ function App() {
   const selectedIdHandler = (id) => {
     setSelectedId(Number(id));
   };
-
+  const addFavoriteHandler = (id) => {
+    const favoriteCharacter = allCharacters.find(
+      (character) => character.id === Number(id)
+    );
+    setFavorites((prev) => [...prev, favoriteCharacter]);
+  };
+  console.log("favorite:", favorites);
   return (
     <div className="">
       <Toaster />
@@ -45,6 +52,7 @@ function App() {
         numOfList={allCharacters?.length}
         serach={serach}
         setSearch={setSearch}
+        numOfFavorites={favorites.length}
       />
       <div className=" flex flex-col md:flex-row justify-between w-full gap-10">
         <CharachterList
@@ -52,7 +60,10 @@ function App() {
           isLoading={isLoading}
           selectedIdHandler={selectedIdHandler}
         />
-        <CharacterDetail selctedId={selctedId} />
+        <CharacterDetail
+          selctedId={selctedId}
+          addFavoriteHandler={addFavoriteHandler}
+        />
       </div>
     </div>
   );
