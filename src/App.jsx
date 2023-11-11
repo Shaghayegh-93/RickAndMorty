@@ -44,7 +44,8 @@ function App() {
     );
     setFavorites((prev) => [...prev, favoriteCharacter]);
   };
-  console.log("favorite:", favorites);
+
+  const isAddToFavourite = favorites.map((fav) => fav.id).includes(selctedId);
   return (
     <div className="">
       <Toaster />
@@ -53,6 +54,7 @@ function App() {
         serach={serach}
         setSearch={setSearch}
         numOfFavorites={favorites.length}
+        favorites={favorites}
       />
       <div className=" flex flex-col md:flex-row justify-between w-full gap-10">
         <CharachterList
@@ -64,6 +66,7 @@ function App() {
         <CharacterDetail
           selctedId={selctedId}
           addFavoriteHandler={addFavoriteHandler}
+          isAddToFavourite={isAddToFavourite}
         />
       </div>
     </div>
