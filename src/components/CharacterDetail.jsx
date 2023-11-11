@@ -4,7 +4,11 @@ import { ArrowDownCircleIcon } from "@heroicons/react/24/outline";
 import toast from "react-hot-toast";
 import axios from "axios";
 
-const CharacterDetail = ({ selctedId, addFavoriteHandler }) => {
+const CharacterDetail = ({
+  selctedId,
+  addFavoriteHandler,
+  isAddToFavourite,
+}) => {
   const [character, setCharacter] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [episodes, setEpisodes] = useState([]);
@@ -70,12 +74,16 @@ const CharacterDetail = ({ selctedId, addFavoriteHandler }) => {
             </p>
           </div>
           <div className="mb-4 md:mb-0">
-            <button
-              onClick={() => addFavoriteHandler(character.id)}
-              className="py-1 px-2 md:py-3 md:px-4   rounded-2xl bg-slate500 text-slate-100 md:font-bold"
-            >
-              Add to Favorite
-            </button>
+            {isAddToFavourite ? (
+              <p className="text-slate-300">Already Added To Favourite👌 </p>
+            ) : (
+              <button
+                onClick={() => addFavoriteHandler(character.id)}
+                className="py-1 px-2 md:py-3 md:px-4   rounded-2xl bg-slate500 text-slate-100 md:font-bold"
+              >
+                Add to Favorite
+              </button>
+            )}
           </div>
         </div>
       </div>
