@@ -28,7 +28,7 @@ const CharacterList = ({
 
 export default CharacterList;
 
-function Character({ character, selectedIdHandler, selctedId }) {
+export function Character({ character, selectedIdHandler, selctedId }) {
   return (
     <div className="grid grid-cols-[4rem,1fr,2rem,2rem] md:grid-cols-[4rem,1fr,2rem] grid-rows-2 gap-x-4 bg-slate800 rounded-lg p-3 cursor-pointer transition-all duration-[0.2s] ease-out hover:bg-slate700 mb-6 last:mb-0">
       <img
