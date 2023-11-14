@@ -25,22 +25,20 @@ function App() {
           `https://rickandmortyapi.com/api/character/?name=${serach}`,
           { signal }
         );
-        console.log(data);
         setallCharacters(data.results.slice(0, 5));
       } catch (error) {
         if (!axios.isCancel()) {
           setallCharacters([]);
-          toast.error(error.message);
+          toast.error(error.response.data.error);
         }
       } finally {
         setIsLoading(false);
       }
     };
+    fetchData();
     return () => {
       controller.abort();
     };
-
-    fetchData();
   }, [serach]);
 
   const selectedIdHandler = (id) => {
