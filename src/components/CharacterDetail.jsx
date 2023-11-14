@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 // import { episodes } from "../../data/data";
-import { ArrowDownCircleIcon } from "@heroicons/react/24/outline";
+import {
+  ArrowDownCircleIcon,
+  ArrowUpCircleIcon,
+} from "@heroicons/react/24/outline";
 import toast from "react-hot-toast";
 import axios from "axios";
 
@@ -12,6 +15,7 @@ const CharacterDetail = ({
   const [character, setCharacter] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [episodes, setEpisodes] = useState([]);
+  console.log("episodes:", episodes);
 
   useEffect(() => {
     const fetchselectedCharacter = async () => {
@@ -95,18 +99,37 @@ const CharacterDetail = ({
 export default CharacterDetail;
 
 function EpisodeList({ episodes }) {
+  const [isSortBy, setIsSortBy] = useState(true);
+
+  let sortedEpisodes;
+  if (isSortBy) {
+    sortedEpisodes = [...episodes].sort(
+      (a, b) => new Date(a.created) - new Date(b.created)
+    );
+  } else {
+    sortedEpisodes = [...episodes].sort(
+      (a, b) => new Date(b.created) - new Date(a.created)
+    );
+  }
   return (
     <div className="text-white p-4 bg-slate800 rounded-lg cursor-pointer transition-all duration-[0.2s] ease-out hover:bg-slate700">
       <div className="flex justify-between mb-6">
         <h2 className="md:font-bold text-2xl text-slate-400">
           List of Episodes:
         </h2>
-        <button className="text-slate300">
-          <ArrowDownCircleIcon className="w-8 h-8" />
+        <button
+          className="text-slate300"
+          onClick={() => setIsSortBy(!isSortBy)}
+        >
+          <ArrowUpCircleIcon
+            className={`w-8 h-8 transition-all duration-[0.3s] ease-in-out ${
+              isSortBy ? "rotate-0" : "rotate-180"
+            }`}
+          />
         </button>
       </div>
       <ul className="flex flex-col">
-        {episodes.map((episode, index) => (
+        {sortedEpisodes.map((episode, index) => (
           <li className="flex justify-between mb-4" key={episode.id}>
             <div className="text-sm md:text-lg">
               {String(index + 1).padStart(2, "0")}&nbsp;-&nbsp;{episode.episode}
