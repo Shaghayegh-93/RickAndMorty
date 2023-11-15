@@ -24,6 +24,10 @@ export default {
         rose600: "#e11d48",
         rose500: "#f43f5e",
         green600: "#22c55e",
+        backdrop: "rgba(0, 0, 0, 0.54)",
+      },
+      boxShadow: {
+        modalShadow: "1px 1px  50px #475569",
       },
     },
   },
