@@ -9,11 +9,8 @@ body {
   @apply w-[100vw] min-h-[100vh] bg-slate900;
 }
 
-@layer components{
-  .icon{
-    @apply w-6 h-6
-  }
-  .backdrop{
-    
+@layer components {
+  .icon {
+    @apply w-6 h-6;
   }
 }
