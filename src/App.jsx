@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-// import { allCharacters } from "../data/data";
 import "./App.css";
 import CharacterDetail from "./components/CharacterDetail";
 import CharachterList from "./components/CharacterList";
@@ -14,6 +13,7 @@ function App() {
   const [serach, setSearch] = useState("");
   const [selctedId, setSelectedId] = useState(null);
   const [favorites, setFavorites] = useState([]);
+  console.log("allll", allCharacters);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -25,6 +25,7 @@ function App() {
           `https://rickandmortyapi.com/api/character/?name=${serach}`,
           { signal }
         );
+        console.log(error);
         setallCharacters(data.results.slice(0, 5));
       } catch (error) {
         if (!axios.isCancel()) {
@@ -52,6 +53,10 @@ function App() {
   };
 
   const isAddToFavourite = favorites.map((fav) => fav.id).includes(selctedId);
+  const removeFavouriteHandler = (id) => {
+    const updatedFavourites = favorites.filter((fav) => fav.id !== selctedId);
+    setFavorites(updatedFavourites);
+  };
   return (
     <div className="">
       <Toaster />
@@ -59,8 +64,8 @@ function App() {
         numOfList={allCharacters?.length}
         serach={serach}
         setSearch={setSearch}
-        numOfFavorites={favorites.length}
         favorites={favorites}
+        removeFavouriteHandler={removeFavouriteHandler}
       />
       <div className=" flex flex-col md:flex-row justify-between w-full gap-10">
         <CharachterList
