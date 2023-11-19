@@ -1,46 +1,22 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import CharacterDetail from "./components/CharacterDetail";
 import CharachterList from "./components/CharacterList";
 import Navbar from "./components/Navbar";
-import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
+import useCharacters from "./hooks/useCharacters";
+import useLocalStorage from "./hooks/useLocalStorage";
 
 function App() {
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [allCharacters, setallCharacters] = useState([]);
-  const [serach, setSearch] = useState("");
+  const [search, setSearch] = useState("");
   const [selctedId, setSelectedId] = useState(null);
-  const [favorites, setFavorites] = useState([]);
-  console.log("allll", allCharacters);
+  const { isLoading, allCharacters } = useCharacters(
+    "https://rickandmortyapi.com/api/character/?name",
+    search
+  );
 
-  useEffect(() => {
-    const controller = new AbortController();
-    const signal = controller.signal;
-    const fetchData = async () => {
-      try {
-        setIsLoading(true);
-        const { data } = await axios.get(
-          `https://rickandmortyapi.com/api/character/?name=${serach}`,
-          { signal }
-        );
-        console.log(error);
-        setallCharacters(data.results.slice(0, 5));
-      } catch (error) {
-        if (!axios.isCancel()) {
-          setallCharacters([]);
-          toast.error(error.response.data.error);
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchData();
-    return () => {
-      controller.abort();
-    };
-  }, [serach]);
+  const [favorites, setFavorites] = useLocalStorage("Favorites", []);
 
   const selectedIdHandler = (id) => {
     setSelectedId(Number(id));
@@ -62,7 +38,7 @@ function App() {
       <Toaster />
       <Navbar
         numOfList={allCharacters?.length}
-        serach={serach}
+        search={search}
         setSearch={setSearch}
         favorites={favorites}
         removeFavouriteHandler={removeFavouriteHandler}
