@@ -5,7 +5,7 @@ import { Character } from "./CharacterList";
 
 const Navbar = ({
   numOfList,
-  serach,
+  search,
   setSearch,
   favorites,
   removeFavouriteHandler,
@@ -16,8 +16,8 @@ const Navbar = ({
       <input
         className="py-3 px-4 rounded-lg text-slate100 bg-slate500 text-base hidden md:inline-block"
         type="text"
-        placeholder="Serach..."
-        value={serach}
+        placeholder="search..."
+        value={search}
         onChange={(e) => setSearch(e.target.value)}
       />
       <p className="text-slate400">found {numOfList} result </p>
