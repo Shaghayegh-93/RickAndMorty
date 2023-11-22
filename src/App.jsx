@@ -3,7 +3,7 @@ import "./App.css";
 import CharacterDetail from "./components/CharacterDetail";
 import CharachterList from "./components/CharacterList";
 import Navbar from "./components/Navbar";
-import toast, { Toaster } from "react-hot-toast";
+import  { Toaster } from "react-hot-toast";
 import useCharacters from "./hooks/useCharacters";
 import useLocalStorage from "./hooks/useLocalStorage";
 
