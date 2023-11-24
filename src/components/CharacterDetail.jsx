@@ -11,7 +11,6 @@ const CharacterDetail = ({
   const [character, setCharacter] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [episodes, setEpisodes] = useState([]);
-  console.log("episodes:", episodes);
 
   useEffect(() => {
     const fetchselectedCharacter = async () => {
